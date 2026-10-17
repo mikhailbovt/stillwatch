@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#080808" />
+    <title>Stillwatch &mdash; Observation desk</title>
+    <link rel="icon" href="/static/mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#observation">Skip to observation</a>
+    <header class="masthead">
+      <a class="brand" href="/" aria-label="Stillwatch home">Stillwatch</a>
+      <nav aria-label="Main navigation">
+        <a class="nav-current" href="#observation">Observe</a
+        ><a href="#event-heading">Events</a
+        ><a href="/openapi.json" target="_blank" rel="noopener">API</a>
+      </nav>
+      <div class="connection">
+        <span class="dot" id="connection-dot"></span
+        ><span id="connection">Connecting</span>
+      </div>
+    </header>
+    <main id="observation">
+      <div class="page-title">
+        <div>
+          <h1>Monitor</h1>
+        </div>
+        <div class="session">
+          <span id="camera">local-01</span><time id="clock"></time>
+        </div>
+      </div>
+      <section class="source-bar" aria-label="Current video source">
+        <div class="source-description">
+          <span class="eyebrow">SOURCE</span
+          ><strong id="source-name">No source selected</strong
+          ><span id="source-description"
+            >Choose a video, camera or network stream.</span
+          >
+        </div>
+        <div class="source-actions">
+          <button class="button secondary" id="stop-source" disabled>
+            Stop</button
+          ><button class="button primary" id="choose-source">
+            Choose source
+          </button>
+        </div>
+      </section>
+      <div class="workspace">
+        <section class="monitor" aria-labelledby="monitor-heading">
+          <div class="panel-title">
+            <h2 id="monitor-heading">Live view</h2>
+            <div>
+              <span class="live-dot"></span
+              ><span id="capture-state">WAITING FOR SOURCE</span>
+            </div>
+          </div>
+          <div class="video-stage" id="video-stage">
+            <img
+              id="video"
+              class="no-source"
+              alt="Current video preview"
+            /><canvas id="overlay" aria-hidden="true"></canvas>
+            <div class="empty-source" id="empty-source">
+              <h3>No video</h3>
+            </div>
+            <div class="video-label">
+              <span id="video-resolution">NO VIDEO</span
+              ><span id="source-time">00:00.0</span>
+            </div>
+          </div>
+          <div class="monitor-foot">
+            <label
+              ><input type="checkbox" id="show-boxes" checked /> Show
+              regions</label
+            ><span id="buffer-depth">Buffer 0.0 s</span>
+          </div>
+          <div class="route-grid">
+            <article class="route-card">
+              <div class="eyebrow">
+                MEDICAL <span class="route-state" id="pose-state">&mdash;</span>
+              </div>
+              <h3 id="medical-status">Awaiting observations</h3>
+              <p id="medical-detail">&mdash;</p>
+            </article>
+            <article class="route-card">
+              <div class="eyebrow">
+                FIRE &amp; SMOKE
+                <span class="route-state" id="fire-state">&mdash;</span>
+              </div>
+              <h3 id="fire-status">Awaiting observations</h3>
+              <p id="fire-detail">&mdash;</p>
+            </article>
+          </div>
+          <div class="limitations" id="limitations" role="status"></div>
+        </section>
+        <aside class="event-panel" aria-labelledby="event-heading">
+          <div class="panel-title">
+            <h2 id="event-heading">
+              Events <span class="count" id="event-count">0</span>
+            </h2>
+            <button
+              class="text-button"
+              id="history-toggle"
+              aria-pressed="false"
+            >
+              Show history
+            </button>
+          </div>
+          <div class="event-filters" role="group" aria-label="Filter events">
+            <button data-filter="all" class="filter active" aria-pressed="true">
+              All</button
+            ><button data-filter="medical" class="filter" aria-pressed="false">
+              Medical</button
+            ><button data-filter="fire" class="filter" aria-pressed="false">
+              Fire / smoke
+            </button>
+          </div>
+          <div id="event-list" class="event-list">
+            <div class="empty-events">
+              <h3>No events</h3>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <details class="diagnostics-panel">
+        <summary>
+          System details <span id="system-state">INITIALIZING</span>
+        </summary>
+        <section class="diagnostics" aria-label="System diagnostics">
+          <div><span>Provider</span><strong id="mode">&mdash;</strong></div>
+          <div><span>Frame age</span><strong id="frame-age">&mdash;</strong></div>
+          <div><span>Pose / fire</span><strong id="route-fps">&mdash;</strong></div>
+          <div>
+            <span>Last overview</span><strong id="overview-age">&mdash;</strong>
+          </div>
+          <div><span>Queue</span><strong id="queue">0 / 8</strong></div>
+          <div>
+            <span>Requests today &middot; UTC</span><strong id="requests">0</strong>
+          </div>
+          <div><span>Input tokens</span><strong id="tokens">0</strong></div>
+          <div>
+            <span>Evidence storage</span><strong id="storage">0 MB</strong>
+          </div>
+        </section>
+        <div id="motion-summary" class="motion-summary"></div>
+        <p id="usage-label" class="detail-meta"></p>
+      </details>
+      <footer>
+        <span>Stillwatch <span class="separator">/</span> 0.5.0</span
+        ><span>Research preview</span>
+      </footer>
+    </main>
+    <dialog id="source-dialog" class="source-dialog">
+      <div class="dialog-heading">
+        <div>
+          <div class="eyebrow">INPUT</div>
+          <h2>Choose a source</h2>
+        </div>
+        <button
+          id="source-close"
+          class="text-button"
+          aria-label="Close source selection"
+        >
+          Close
+        </button>
+      </div>
+      <form id="source-form">
+        <p id="source-privacy" class="field-help">
+          Processing stays local in mock mode.
+        </p>
+        <label class="field-label" for="source-kind">Source type</label
+        ><select id="source-kind">
+          <option value="file">Video file</option>
+          <option value="camera">Connected camera</option>
+          <option value="rtsp">RTSP stream</option>
+        </select>
+        <div id="file-fields" class="source-fields">
+          <label class="upload-area" for="video-file"
+            ><strong>Upload a video</strong
+            ><span id="file-label"
+              >MP4, AVI, MOV, MKV or WebM &middot; up to 512 MB</span
+            ><input
+              id="video-file"
+              type="file"
+              accept=".mp4,.avi,.mkv,.mov,.webm,.m4v" /></label
+          ><label class="field-label" for="saved-video"
+            >Or use a saved video</label
+          ><select id="saved-video">
+            <option value="">Select a video</option>
+          </select>
+          <details class="server-path">
+            <summary>Use a file on the server</summary>
+            <label class="field-label" for="server-path"
+              >Allowed server path</label
+            ><input
+              id="server-path"
+              type="text"
+              placeholder="Path within configured source_roots"
+              autocomplete="off"
+            />
+            <p class="field-help">
+              Available only when the server has an allowed video directory.
+            </p>
+          </details>
+          <label class="checkbox-label"
+            ><input id="source-loop" type="checkbox" /> Loop recording</label
+          >
+        </div>
+        <div id="camera-fields" class="source-fields" hidden>
+          <label class="field-label" for="camera-index">Camera index</label
+          ><input id="camera-index" type="number" min="0" max="31" value="0" />
+          <p class="field-help">
+            A USB or built-in camera connected to the machine running
+            Stillwatch. Index 0 is usually the first camera.
+          </p>
+        </div>
+        <div id="rtsp-fields" class="source-fields" hidden>
+          <label class="field-label" for="rtsp-url">Stream URL</label
+          ><input
+            id="rtsp-url"
+            type="password"
+            placeholder="rtsp://camera-address/stream"
+            autocomplete="off"
+          />
+          <p class="field-help">
+            Credentials stay on the server and are omitted from event metadata
+            and source labels.
+          </p>
+        </div>
+        <p id="source-error" class="form-error" role="alert" hidden></p>
+        <div class="form-footer">
+          <p>
+            Previous events remain in History.
+          </p>
+          <button type="submit" class="button primary" id="source-submit">
+            Use source
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="access-dialog" class="source-dialog">
+      <form id="access-form">
+        <div class="eyebrow">PROTECTED DESK</div>
+        <h2>Connect to Stillwatch</h2>
+        <label class="field-label" for="access-token">Access token</label
+        ><input id="access-token" type="password" autocomplete="off" required />
+        <p class="field-help">
+          Use the access token configured on this Stillwatch server.
+        </p>
+        <p id="access-error" class="form-error" role="alert" hidden></p>
+        <button class="button primary" type="submit">Connect</button>
+      </form>
+    </dialog>
+    <dialog id="detail-dialog">
+      <div class="dialog-heading">
+        <div>
+          <div class="eyebrow">EVENT EVIDENCE</div>
+          <h2 id="detail-title">Event</h2>
+        </div>
+        <button
+          id="dialog-close"
+          class="text-button"
+          aria-label="Close evidence"
+        >
+          Close
+        </button>
+      </div>
+      <div id="detail-body"></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+  </body>
+</html>

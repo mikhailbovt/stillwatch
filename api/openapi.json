@@ -1,0 +1,1353 @@
+{
+  "components": {
+    "schemas": {
+      "Box": {
+        "properties": {
+          "x1": {
+            "title": "X1",
+            "type": "number"
+          },
+          "x2": {
+            "title": "X2",
+            "type": "number"
+          },
+          "y1": {
+            "title": "Y1",
+            "type": "number"
+          },
+          "y2": {
+            "title": "Y2",
+            "type": "number"
+          }
+        },
+        "required": [
+          "x1",
+          "y1",
+          "x2",
+          "y2"
+        ],
+        "title": "Box",
+        "type": "object"
+      },
+      "Category": {
+        "enum": [
+          "medical",
+          "fire",
+          "overview"
+        ],
+        "title": "Category",
+        "type": "string"
+      },
+      "EventPage": {
+        "properties": {
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/Incident"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "events",
+          "total"
+        ],
+        "title": "EventPage",
+        "type": "object"
+      },
+      "Feedback": {
+        "properties": {
+          "action": {
+            "enum": [
+              "confirmed",
+              "false_alarm"
+            ],
+            "title": "Action",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "title": "Feedback",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Incident": {
+        "properties": {
+          "analysis_status": {
+            "$ref": "#/components/schemas/Status",
+            "default": "PENDING"
+          },
+          "assessment_stale": {
+            "default": false,
+            "title": "Assessment Stale",
+            "type": "boolean"
+          },
+          "box": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Box"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "camera_id": {
+            "title": "Camera Id",
+            "type": "string"
+          },
+          "candidate_refs": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Candidate Refs",
+            "type": "array"
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          },
+          "closed_source_ts": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed Source Ts"
+          },
+          "confirmation_frames_required": {
+            "default": 0,
+            "title": "Confirmation Frames Required",
+            "type": "integer"
+          },
+          "confirmation_frames_seen": {
+            "default": 0,
+            "title": "Confirmation Frames Seen",
+            "type": "integer"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "number"
+          },
+          "detected_ts": {
+            "default": 0,
+            "title": "Detected Ts",
+            "type": "number"
+          },
+          "early_screen_complete": {
+            "default": false,
+            "title": "Early Screen Complete",
+            "type": "boolean"
+          },
+          "epoch": {
+            "title": "Epoch",
+            "type": "integer"
+          },
+          "evidence_missing": {
+            "default": false,
+            "title": "Evidence Missing",
+            "type": "boolean"
+          },
+          "feedback": {
+            "anyOf": [
+              {
+                "enum": [
+                  "confirmed",
+                  "false_alarm"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Feedback"
+          },
+          "feedback_at": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Feedback At"
+          },
+          "feedback_operator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Feedback Operator"
+          },
+          "fire_status": {
+            "$ref": "#/components/schemas/Status",
+            "default": "PENDING"
+          },
+          "first_assessment_source_ts": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Assessment Source Ts"
+          },
+          "first_ts": {
+            "title": "First Ts",
+            "type": "number"
+          },
+          "full_assessment_source_ts": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Full Assessment Source Ts"
+          },
+          "identity_uncertain": {
+            "default": false,
+            "title": "Identity Uncertain",
+            "type": "boolean"
+          },
+          "incident_id": {
+            "title": "Incident Id",
+            "type": "string"
+          },
+          "last_assessed_motion_phase": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Assessed Motion Phase"
+          },
+          "last_ts": {
+            "title": "Last Ts",
+            "type": "number"
+          },
+          "latest_posture": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Posture"
+          },
+          "lifecycle": {
+            "$ref": "#/components/schemas/Lifecycle",
+            "default": "OPEN"
+          },
+          "limited": {
+            "default": false,
+            "title": "Limited",
+            "type": "boolean"
+          },
+          "medical_observation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Medical Observation"
+          },
+          "medical_status": {
+            "$ref": "#/components/schemas/Status",
+            "default": "PENDING"
+          },
+          "motion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MotionEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "observation_seconds_required": {
+            "default": 0,
+            "title": "Observation Seconds Required",
+            "type": "number"
+          },
+          "observation_seconds_seen": {
+            "default": 0,
+            "title": "Observation Seconds Seen",
+            "type": "number"
+          },
+          "observation_started_ts": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Started Ts"
+          },
+          "ordinary_activity_confirmed": {
+            "default": false,
+            "title": "Ordinary Activity Confirmed",
+            "type": "boolean"
+          },
+          "origin_incident_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin Incident Id"
+          },
+          "origin_packet_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin Packet Id"
+          },
+          "packet_version": {
+            "default": 0,
+            "title": "Packet Version",
+            "type": "integer"
+          },
+          "policy_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Reason"
+          },
+          "priority": {
+            "default": 1,
+            "title": "Priority",
+            "type": "integer"
+          },
+          "queue_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Queue Reason"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "recurrence_count": {
+            "default": 0,
+            "title": "Recurrence Count",
+            "type": "integer"
+          },
+          "request_count": {
+            "default": 0,
+            "title": "Request Count",
+            "type": "integer"
+          },
+          "resolution_checks": {
+            "default": 0,
+            "title": "Resolution Checks",
+            "type": "integer"
+          },
+          "superseded_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Superseded By"
+          },
+          "track_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Track Ids",
+            "type": "array"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "number"
+          }
+        },
+        "required": [
+          "camera_id",
+          "category",
+          "reason",
+          "first_ts",
+          "last_ts",
+          "epoch"
+        ],
+        "title": "Incident",
+        "type": "object"
+      },
+      "Lifecycle": {
+        "enum": [
+          "OPEN",
+          "ACKNOWLEDGED",
+          "CLOSED"
+        ],
+        "title": "Lifecycle",
+        "type": "string"
+      },
+      "MotionEvidence": {
+        "description": "Causal geometric observations; never a probability of injury or a claim of intent.",
+        "properties": {
+          "classifier_version": {
+            "default": "causal-motion-v4",
+            "title": "Classifier Version",
+            "type": "string"
+          },
+          "clear_eligible": {
+            "default": false,
+            "title": "Clear Eligible",
+            "type": "boolean"
+          },
+          "episode_id": {
+            "title": "Episode Id",
+            "type": "string"
+          },
+          "epoch": {
+            "title": "Epoch",
+            "type": "integer"
+          },
+          "features": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Features",
+            "type": "object"
+          },
+          "identity_uncertain": {
+            "default": false,
+            "title": "Identity Uncertain",
+            "type": "boolean"
+          },
+          "last_seen_ts": {
+            "title": "Last Seen Ts",
+            "type": "number"
+          },
+          "observed_ts": {
+            "title": "Observed Ts",
+            "type": "number"
+          },
+          "onset_observed": {
+            "default": false,
+            "title": "Onset Observed",
+            "type": "boolean"
+          },
+          "phase": {
+            "default": "observing",
+            "enum": [
+              "observing",
+              "following_concern",
+              "ordinary_activity",
+              "recovered_activity",
+              "visibility_lost"
+            ],
+            "title": "Phase",
+            "type": "string"
+          },
+          "posture": {
+            "default": "uncertain",
+            "enum": [
+              "upright",
+              "seated",
+              "low",
+              "uncertain"
+            ],
+            "title": "Posture",
+            "type": "string"
+          },
+          "previous_episode_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Episode Id"
+          },
+          "recovery_basis": {
+            "anyOf": [
+              {
+                "enum": [
+                  "upright_activity",
+                  "prior_supported_posture"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recovery Basis"
+          },
+          "recovery_seconds": {
+            "default": 0,
+            "title": "Recovery Seconds",
+            "type": "number"
+          },
+          "started_ts": {
+            "title": "Started Ts",
+            "type": "number"
+          },
+          "track_id": {
+            "title": "Track Id",
+            "type": "integer"
+          },
+          "transition": {
+            "default": "none",
+            "enum": [
+              "none",
+              "fall_like",
+              "slow_descent",
+              "controlled_pattern",
+              "unknown_origin"
+            ],
+            "title": "Transition",
+            "type": "string"
+          }
+        },
+        "required": [
+          "episode_id",
+          "track_id",
+          "epoch",
+          "started_ts",
+          "observed_ts",
+          "last_seen_ts"
+        ],
+        "title": "MotionEvidence",
+        "type": "object"
+      },
+      "SourceDescriptor": {
+        "properties": {
+          "epoch": {
+            "title": "Epoch",
+            "type": "integer"
+          },
+          "file_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Id"
+          },
+          "kind": {
+            "enum": [
+              "none",
+              "file",
+              "camera",
+              "rtsp"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "loop": {
+            "default": false,
+            "title": "Loop",
+            "type": "boolean"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "label",
+          "state",
+          "epoch"
+        ],
+        "title": "SourceDescriptor",
+        "type": "object"
+      },
+      "SourceRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "camera_index": {
+            "default": 0,
+            "maximum": 31.0,
+            "minimum": 0.0,
+            "title": "Camera Index",
+            "type": "integer"
+          },
+          "file_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Id"
+          },
+          "kind": {
+            "enum": [
+              "none",
+              "file",
+              "camera",
+              "rtsp"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "loop": {
+            "default": false,
+            "title": "Loop",
+            "type": "boolean"
+          },
+          "path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "title": "SourceRequest",
+        "type": "object"
+      },
+      "Status": {
+        "enum": [
+          "PENDING",
+          "NO_ALERT",
+          "REVIEW",
+          "URGENT",
+          "UNKNOWN",
+          "UNAVAILABLE"
+        ],
+        "title": "Status",
+        "type": "string"
+      },
+      "UploadedVideo": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "file_id": {
+            "title": "File Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file_id",
+          "name",
+          "bytes"
+        ],
+        "title": "UploadedVideo",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "description": "Required when server API authentication is configured.",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "title": "Stillwatch",
+    "version": "0.5.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "index__get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Index"
+      }
+    },
+    "/api/v1/events": {
+      "get": {
+        "operationId": "events_api_v1_events_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Events"
+      }
+    },
+    "/api/v1/events/{incident_id}": {
+      "get": {
+        "operationId": "detail_api_v1_events__incident_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incident_id",
+            "required": true,
+            "schema": {
+              "title": "Incident Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Detail"
+      }
+    },
+    "/api/v1/events/{incident_id}/close": {
+      "post": {
+        "operationId": "close_api_v1_events__incident_id__close_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incident_id",
+            "required": true,
+            "schema": {
+              "title": "Incident Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-stillwatch-action",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Stillwatch-Action"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Incident"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Close"
+      }
+    },
+    "/api/v1/events/{incident_id}/feedback": {
+      "post": {
+        "operationId": "feedback_api_v1_events__incident_id__feedback_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incident_id",
+            "required": true,
+            "schema": {
+              "title": "Incident Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-stillwatch-action",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Stillwatch-Action"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Feedback"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Incident"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Feedback"
+      }
+    },
+    "/api/v1/evidence/{incident_id}/{packet_id}/{index}": {
+      "get": {
+        "operationId": "evidence_api_v1_evidence__incident_id___packet_id___index__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incident_id",
+            "required": true,
+            "schema": {
+              "title": "Incident Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "packet_id",
+            "required": true,
+            "schema": {
+              "title": "Packet Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "index",
+            "required": true,
+            "schema": {
+              "title": "Index",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Evidence"
+      }
+    },
+    "/api/v1/health": {
+      "get": {
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    },
+    "/api/v1/source": {
+      "get": {
+        "operationId": "source_api_v1_source_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceDescriptor"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Source"
+      },
+      "put": {
+        "operationId": "select_source_api_v1_source_put",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-stillwatch-action",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Stillwatch-Action"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceDescriptor"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Select Source"
+      }
+    },
+    "/api/v1/stream": {
+      "get": {
+        "operationId": "stream_api_v1_stream_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Stream"
+      }
+    },
+    "/api/v1/telemetry": {
+      "get": {
+        "operationId": "telemetry_api_v1_telemetry_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Telemetry"
+      }
+    },
+    "/api/v1/updates": {
+      "get": {
+        "operationId": "updates_api_v1_updates_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Updates"
+      }
+    },
+    "/api/v1/videos": {
+      "get": {
+        "operationId": "videos_api_v1_videos_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/UploadedVideo"
+                  },
+                  "title": "Response Videos Api V1 Videos Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Videos"
+      },
+      "post": {
+        "operationId": "upload_video_api_v1_videos_post",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-stillwatch-action",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Stillwatch-Action"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadedVideo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Upload Video"
+      }
+    }
+  }
+}

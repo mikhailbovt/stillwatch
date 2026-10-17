@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-15",
+  "runtime": "See uv.lock for exact Ultralytics and PyTorch versions",
+  "models": {
+    "pose": {
+      "source": "https://github.com/ultralytics/assets",
+      "revision": "v8.4.0",
+      "filename": "yolo26n-pose.pt",
+      "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26n-pose.pt",
+      "sha256": "eb3bb8268828aeaf515cec23a4bfafd793944a86fe9af94ba7823609c14522a9",
+      "size": 7878574,
+      "classes": {
+        "0": "person"
+      },
+      "task": "pose",
+      "license": "AGPL-3.0",
+      "license_url": "https://www.ultralytics.com/license",
+      "local_path": "models/pose.safetensors",
+      "tensor_sha256": "c35c2d12d2f47473cb8b7bd1164de13f8ffb86f213ff9cc0f259d793a9f79ee7",
+      "module_types_sha256": "d63b549374e9aede17809dc77411554f7ff62998d19b63196ce30c14ecd43569",
+      "status": "candidate"
+    },
+    "fire": {
+      "source": "https://huggingface.co/rabahdev/fire-smoke-yolov8n",
+      "revision": "13017fe8af477c25f5298d168e2dfede4b000753",
+      "filename": "best.pt",
+      "url": "https://huggingface.co/rabahdev/fire-smoke-yolov8n/resolve/13017fe8af477c25f5298d168e2dfede4b000753/best.pt",
+      "sha256": "b91633799ceb052c814b4f8b77a37efc9a40f002d528df97d74463585fa4f28f",
+      "size": 6229802,
+      "classes": {
+        "0": "smoke",
+        "1": "fire"
+      },
+      "task": "detect",
+      "license": "AGPL-3.0",
+      "license_url": "https://huggingface.co/rabahdev/fire-smoke-yolov8n#license",
+      "training_data": "D-Fire, as stated by the model author; source-data rights need separate review",
+      "local_path": "models/fire.safetensors",
+      "tensor_sha256": "35d819bf2b3af8be56aa65b1b296b29863b160bd5816c0107b468025377fc93f",
+      "module_types_sha256": "963c7a83dafb46a72fd876474bc23a926fe15e3841cc788bfcce6afd8ee6c092",
+      "identity_activations": [
+        "model.9.cv1.act"
+      ],
+      "status": "candidate"
+    },
+    "pose_balanced": {
+      "source": "https://github.com/ultralytics/assets",
+      "revision": "v8.4.0",
+      "filename": "yolo26s-pose.pt",
+      "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26s-pose.pt",
+      "sha256": "a083adb42303728ae14c4bd6bd56d80da46f82fb2564dbd6f31dcc92ea321646",
+      "size": 24151790,
+      "classes": {
+        "0": "person"
+      },
+      "task": "pose",
+      "license": "AGPL-3.0",
+      "license_url": "https://www.ultralytics.com/license",
+      "local_path": "models/pose-balanced.safetensors",
+      "tensor_sha256": "ea02cac449e9ea28bc37e1d154a768e79f38baf04d1cd6c0d00addbce5a99b0a",
+      "module_types_sha256": "d63b549374e9aede17809dc77411554f7ff62998d19b63196ce30c14ecd43569",
+      "status": "candidate"
+    }
+  }
+}

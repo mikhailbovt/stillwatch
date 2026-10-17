@@ -1,0 +1,28 @@
+name: Release artifacts
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --group dev
+      - name: Verify release version
+        if: github.ref_type == 'tag'
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: uv run python -c "import os,tomllib; from pathlib import Path; assert os.environ['RELEASE_TAG'] == 'v' + tomllib.loads(Path('pyproject.toml').read_text())['project']['version']"
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run pytest -q
+      - run: uv run python tools/build_release.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stillwatch-distributions
+          path: dist/*
+          if-no-files-found: error

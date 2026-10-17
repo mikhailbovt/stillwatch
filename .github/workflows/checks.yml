@@ -1,0 +1,52 @@
+name: Checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  checks:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --group dev
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run pytest -q
+      - run: node --check src/stillwatch/web/app.js
+      - run: uv run python tools/build_release.py --output dist/checks
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --group dev
+      - run: docker build -t stillwatch:0.5.0 .
+      - run: uv run python tools/fetch_models.py --convert
+      - name: Start isolated smoke service
+        shell: bash
+        run: |
+          STILLWATCH_API_TOKEN=$(python -c 'import secrets; print(secrets.token_urlsafe(32))')
+          echo "::add-mask::$STILLWATCH_API_TOKEN"
+          export STILLWATCH_API_TOKEN
+          echo "STILLWATCH_API_TOKEN=$STILLWATCH_API_TOKEN" >> "$GITHUB_ENV"
+          docker run -d --name stillwatch-smoke -p 127.0.0.1:8765:8765 \
+            -e STILLWATCH_API_TOKEN \
+            --mount "type=bind,source=$PWD/models,target=/app/models,readonly" \
+            stillwatch:0.5.0
+      - name: Check service and locked CPU models
+        run: uv run python tools/check_container.py
+      - name: Container logs
+        if: always()
+        run: docker logs stillwatch-smoke
+      - name: Stop smoke service
+        if: always()
+        run: docker rm -f stillwatch-smoke

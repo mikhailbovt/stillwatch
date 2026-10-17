@@ -1,0 +1,15 @@
+.git
+.venv
+.env*
+configs/*.local.yaml
+configs/local.yaml
+data
+models
+reports
+dist
+tests
+sdk
+.github
+__pycache__
+.pytest_cache
+.ruff_cache
