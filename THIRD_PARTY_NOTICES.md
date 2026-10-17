@@ -11,6 +11,6 @@ The fire model author identifies D-Fire as training data. Source-data rights and
 
 `uv.lock` identifies exact runtime distributions; their distribution metadata contains corresponding license notices. `models.lock.json` records model sources, revisions, hashes, classes and license references.
 
-No third-party weights, source videos, annotations or event evidence are distributed. Numeric test fixtures preserve regression inputs and their provenance; they contain no video pixels. Documentation screenshots show the application without source footage.
+Model weights, raw datasets, annotations and event databases are excluded. Numeric test fixtures preserve regression inputs and their provenance; they contain no video pixels. The separate demonstration video and its preview contain credited CC BY 4.0 footage excerpts; see [demonstration credits](docs/demo.md).
 
 Model conversion does not remove upstream terms. Review suitable model/runtime licensing for the intended deployment or supply a separately licensed perception adapter. The HTTP SDK has no inference dependency.
