@@ -6,7 +6,9 @@ Video event triage for human review. Local detection, retained event context, cl
 
 **0.5.0 · Preview**
 
-![Stillwatch monitor](docs/assets/desk.png)
+https://github.com/user-attachments/assets/0d268116-8ec5-4f05-9032-de4e49ac49ea
+
+53 seconds · Staged fall observation and fire detection · Original speed. [Download MP4](https://github.com/mikhailbovt/stillwatch/releases/download/v0.5.0/stillwatch-demo-0.5.0.mp4) · [Footage credits and outcomes](docs/demo.md).
 
 ## Run
 
@@ -68,4 +70,4 @@ uv run pytest -q
 
 ## License
 
-Original service and SDK: [Apache-2.0](LICENSE). The supplied inference runtime and model candidates have separate AGPL terms. Weights, footage, credentials and event databases are excluded. [Third-party notices](THIRD_PARTY_NOTICES.md).
+Original service and SDK: [Apache-2.0](LICENSE). The supplied inference runtime and model candidates have separate AGPL terms. Weights, raw datasets, credentials and event databases are excluded. Demonstration footage retains its own license. [Third-party notices](THIRD_PARTY_NOTICES.md).
